@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>My Christmas Gift to You ✨</title>
+    <style>
+        /* Simple snowflake animation for no JS fallback */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="stars"></div>
+        <div class="twinkling"></div>
+        <div class="clouds"></div>
+    </div>
+
+    <!-- Particle Canvas -->
+    <canvas id="snowCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="nav-icon">🎁</span>
+                <span class="nav-title">For My Love</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active" data-section="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#videos" class="nav-link" data-section="videos">
+                    <i class="fas fa-video"></i>
+                    <span>12 Days</span>
+                </a>
+                <a href="#memories" class="nav-link" data-section="memories">
+                    <i class="fas fa-heart"></i>
+                    <span>Memories</span>
+                </a>
+                <a href="#letter" class="nav-link" data-section="letter">
+                    <i class="fas fa-envelope"></i>
+                    <span>Letter</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="control-btn music-toggle" id="musicToggle">
+                    <i class="fas fa-music"></i>
+                    <span>Music</span>
+                </button>
+                <button class="control-btn snow-toggle" id="snowToggle">
+                    <i class="fas fa-snowflake"></i>
+                    <span>Snow</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="content-section active">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            <span class="title-line">Merry Christmas</span>
+                            <span class="title-line highlight">My Love</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            A digital gift from me to you, with all my love this Christmas season
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn-primary" onclick="scrollToSection('videos')">
+                                <i class="fas fa-play-circle"></i>
+                                Watch Your Videos
+                            </button>
+                            <button class="btn-secondary" onclick="scrollToSection('letter')">
+                                <i class="fas fa-envelope-open-text"></i>
+                                Read My Letter
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="image-frame">
+                            <img src="images/lexi-christmas.jpg" alt="My Beautiful Lexi" class="main-image">
+                            <div class="image-glow"></div>
+                            <div class="image-overlay">
+                                <div class="overlay-text">
+                                    <span>My Forever Christmas Wish</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Countdown -->
+                <div class="countdown-section">
+                    <h3 class="countdown-title">Counting Down to Christmas</h3>
+                    <div class="countdown-grid">
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="days">0</div>
+                            <div class="countdown-label">Days</div>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="hours">00</div>
+                            <div class="countdown-label">Hours</div>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="minutes">00</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="seconds">00</div>
+                            <div class="countdown-label">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Videos Section -->
+        <section id="videos" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-icon">🎬</span>
+                    12 Days of Christmas Videos
+                </h2>
+                <p class="section-subtitle">Each day reveals a new reason why I love you</p>
+            </div>
+
+            <div class="videos-grid">
+                <!-- Day 1 -->
+                <div class="video-card" data-day="1">
+                    <div class="video-preview" onclick="openVideoModal(1)">
+                        <div class="preview-overlay">
+                            <i class="fas fa-play"></i>
+                            <span class="preview-text">Watch Day 1</span>
+                        </div>
+                        <div class="day-badge">Day 1</div>
+                        <div class="video-title">Your Smile</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Your Beautiful Smile</h3>
+                        <p>The way your smile lights up any room...</p>
+                        <button class="btn-small" onclick="openVideoModal(1)">
+                            <i class="fas fa-play"></i> Play Video
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="video-card" data-day="2">
+                    <div class="video-preview" onclick="openVideoModal(2)">
+                        <div class="preview-overlay">
+                            <i class="fas fa-play"></i>
+                            <span class="preview-text">Watch Day 2</span>
+                        </div>
+                        <div class="day-badge">Day 2</div>
+                        <div class="video-title">Your Laughter</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Your Infectious Laughter</h3>
+                        <p>The sound that makes my world complete...</p>
+                        <button class="btn-small" onclick="openVideoModal(2)">
+                            <i class="fas fa-play"></i> Play Video
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Days 3-12 would follow the same pattern -->
+                <!-- For brevity, I'll show the pattern -->
+                
+                <!-- Add more video cards for days 3-12 -->
+            </div>
+
+            <div class="section-footer">
+                <p class="disclaimer">
+                    <i class="fas fa-lock"></i>
+                    These videos are for your eyes only. Each one is a piece of my heart.
+                </p>
+            </div>
+        </section>
+
+        <!-- Memories Section -->
+        <section id="memories" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-icon">📸</span>
+                    Our Christmas Memories
+                </h2>
+                <p class="section-subtitle">Moments that make our love story special</p>
+            </div>
+
+            <div class="memories-grid">
+                <!-- Memory items would go here -->
+                <!-- Each memory could be an image with caption -->
+            </div>
+        </section>
+
+        <!-- Letter Section -->
+        <section id="letter" class="content-section">
+            <div class="letter-container">
+                <div class="letter-header">
+                    <div class="letter-icon">💌</div>
+                    <h2 class="letter-title">My Christmas Letter to You</h2>
+                    <div class="letter-date">December 2024</div>
+                </div>
+                
+                <div class="letter-content">
+                    <p class="letter-greeting">My Dearest Lexi,</p>
+                    
+                    <p>As I sit here writing this letter, I can't help but think about how incredibly lucky I am to have you in my life. This Christmas season, I wanted to create something special that shows just how much you mean to me.</p>
+                    
+                    <p>Each of the 12 videos represents something I cherish about you - from your beautiful smile that brightens my darkest days, to your incredible strength that inspires me every day. You are my everything, and this digital gift is just a small token of my endless love for you.</p>
+                    
+                    <p>I promise to always be there for you, to support your dreams, and to love you more with each passing day. You are my greatest gift, and I'm so grateful for every moment we share.</p>
+                    
+                    <p class="letter-closing">
+                        All my love, forever and always,<br>
+                        <span class="signature">[Your Name]</span>
+                    </p>
+                </div>
+                
+                <div class="letter-footer">
+                    <div class="seal">
+                        <span>❤️</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Video Modal -->
+    <div class="modal-overlay" id="videoModal">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeVideoModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-content">
+                <div class="video-player" id="videoPlayer">
+                    <!-- Video will be loaded here -->
+                    <video controls id="mainVideoPlayer">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-details">
+                    <h3 id="videoModalTitle">Video Title</h3>
+                    <p id="videoModalDescription">Video description will appear here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Player -->
+    <audio id="christmasMusic" loop>
+        <source src="music/christmas.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-message">
+                Made with <i class="fas fa-heart pulse"></i> for the most amazing person
+            </div>
+            <div class="footer-copyright">
+                &copy; 2024 • Your Christmas Gift • All my love, always
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
