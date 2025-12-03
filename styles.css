@@ -125,6 +125,30 @@ body {
     font-size: 1.125rem;
 }
 
+/* Music button styles */
+.control-btn.music-toggle.active {
+    background: var(--accent-gold);
+    color: var(--bg-dark);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Message animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 .control-btn:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);

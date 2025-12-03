@@ -27,10 +27,12 @@ class SnowParticleSystem {
         
         // Setup snow toggle
         const snowToggle = document.getElementById('snowToggle');
-        snowToggle.addEventListener('click', () => {
-            this.isActive = !this.isActive;
-            snowToggle.classList.toggle('active');
-        });
+        if (snowToggle) {
+            snowToggle.addEventListener('click', () => {
+                this.isActive = !this.isActive;
+                snowToggle.classList.toggle('active');
+            });
+        }
     }
     
     resizeCanvas() {
@@ -137,7 +139,104 @@ class SnowParticleSystem {
     }
 }
 
-// Main Application
+// SIMPLIFIED Music Player - Working version
+class ChristmasMusicPlayer {
+    constructor() {
+        this.audio = document.getElementById('christmasMusic');
+        this.playButton = document.getElementById('musicToggle');
+        this.isPlaying = false;
+        
+        this.init();
+    }
+    
+    init() {
+        // Set initial volume to 50%
+        this.audio.volume = 0.5;
+        
+        // Make sure audio is paused initially
+        this.audio.pause();
+        
+        // Setup event listeners
+        this.setupEventListeners();
+        
+        console.log('Music player initialized');
+        console.log('Audio element:', this.audio);
+        console.log('Play button:', this.playButton);
+    }
+    
+    setupEventListeners() {
+        // Play/Pause button
+        if (this.playButton) {
+            console.log('Setting up play button listener');
+            this.playButton.addEventListener('click', (e) => {
+                console.log('Music button clicked');
+                e.preventDefault();
+                e.stopPropagation();
+                this.togglePlay();
+            });
+        } else {
+            console.error('Music button not found!');
+        }
+        
+        // Update button state when audio starts/stops
+        this.audio.addEventListener('play', () => {
+            console.log('Audio started playing');
+            this.isPlaying = true;
+            this.updateButtonState();
+        });
+        
+        this.audio.addEventListener('pause', () => {
+            console.log('Audio paused');
+            this.isPlaying = false;
+            this.updateButtonState();
+        });
+        
+        // Handle errors
+        this.audio.addEventListener('error', (e) => {
+            console.error('Audio error:', e);
+            console.error('Audio error details:', this.audio.error);
+        });
+    }
+    
+    togglePlay() {
+        console.log('togglePlay called, isPlaying:', this.isPlaying);
+        
+        if (this.isPlaying) {
+            this.audio.pause();
+        } else {
+            this.audio.play().then(() => {
+                console.log('Audio playback started successfully');
+            }).catch(error => {
+                console.error('Failed to play audio:', error);
+                // Show error message
+                this.showPlaybackError();
+            });
+        }
+    }
+    
+    updateButtonState() {
+        if (!this.playButton) return;
+        
+        if (this.isPlaying) {
+            this.playButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+            this.playButton.classList.add('active');
+            this.playButton.title = 'Pause Music';
+            console.log('Button updated: Playing state');
+        } else {
+            this.playButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            this.playButton.classList.remove('active');
+            this.playButton.title = 'Play Music';
+            console.log('Button updated: Paused state');
+        }
+    }
+    
+    showPlaybackError() {
+        // Simple error message
+        alert('Could not play music. Please try clicking the music button again.');
+    }
+}
+
+// Main Application - SIMPLIFIED
 class ChristmasApp {
     constructor() {
         this.currentSection = 'home';
@@ -157,28 +256,29 @@ class ChristmasApp {
                 description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
                 src: "videos/day3.mp4"
             }
-            // Add more videos as needed
         ];
         
         this.init();
     }
     
     init() {
+        console.log('Initializing Christmas App...');
+        
         // Initialize particle system
         this.particleSystem = new SnowParticleSystem();
+        
+        // Initialize music player ONLY - remove any other music setup
+        this.musicPlayer = new ChristmasMusicPlayer();
         
         // Setup navigation
         this.setupNavigation();
         
-        // Setup audio
-        this.setupAudio();
-        
         // Setup modal
         this.setupModal();
         
-        // Initial scroll position
-        // window.scrollTo(0, 0);
         this.initializeSections();
+        
+        console.log('Christmas App initialized successfully');
     }
 
     initializeSections() {
@@ -205,7 +305,6 @@ class ChristmasApp {
     
     setupNavigation() {
         const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('.content-section');
         
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
@@ -219,35 +318,17 @@ class ChristmasApp {
             });
         });
 
-        this.setupScrollDetection();
-    }
-
-    setupScrollDetection() {
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('.content-section');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            const scrollPos = window.scrollY + 100;
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-
-                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
+        // Also setup the button clicks
+        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const text = button.textContent || button.innerText;
+                if (text.includes('Videos')) {
+                    this.scrollToSection('videos');
+                } else if (text.includes('Letter')) {
+                    this.scrollToSection('letter');
                 }
             });
-
-            if (current && current !== this.currentSection) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').substring(1) === current) {
-                        link.classList.add('active');
-                    }
-                });
-                this.currentSection = current;
-            }
         });
     }
     
@@ -266,6 +347,7 @@ class ChristmasApp {
         }
         targetSection.style.display = 'block';
 
+        // Force reflow
         targetSection.offsetHeight;
         
         setTimeout(() => {
@@ -300,47 +382,23 @@ class ChristmasApp {
         this.switchToSection(sectionId);
     }
     
-    setupAudio() {
-        const music = document.getElementById('christmasMusic');
-        const musicToggle = document.getElementById('musicToggle');
-        let isPlaying = false;
-        
-        // Try to autoplay with user interaction
-        const tryPlayMusic = () => {
-            if (!isPlaying) {
-                music.play().then(() => {
-                    isPlaying = true;
-                    musicToggle.classList.add('active');
-                }).catch(() => {
-                    // Autoplay prevented
-                });
-            }
-        };
-        
-        // Try to play on first user interaction
-        document.addEventListener('click', () => {
-            if (!isPlaying) {
-                tryPlayMusic();
-            }
-        }, { once: true });
-        
-        musicToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                music.pause();
-                musicToggle.classList.remove('active');
-            } else {
-                music.play();
-                musicToggle.classList.add('active');
-            }
-            isPlaying = !isPlaying;
-        });
-    }
-    
     setupModal() {
         this.modal = document.getElementById('videoModal');
         this.modalTitle = document.getElementById('modalTitle');
         this.modalDescription = document.getElementById('modalDescription');
         this.videoPlayer = document.getElementById('mainVideo');
+        
+        // Setup video card clicks
+        document.querySelectorAll('.video-preview, .btn-watch').forEach(element => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                const videoCard = element.closest('.video-card');
+                if (videoCard) {
+                    const day = parseInt(videoCard.getAttribute('data-day'));
+                    this.openVideoModal(day);
+                }
+            });
+        });
     }
     
     openVideoModal(day) {
@@ -371,7 +429,7 @@ class ChristmasApp {
     }
 }
 
-// Global helper functions
+// Global helper functions - Keep these simple
 function scrollToSection(sectionId) {
     if (window.christmasApp) {
         window.christmasApp.scrollToSection(sectionId);
@@ -410,5 +468,21 @@ document.addEventListener('keydown', (e) => {
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing app...');
     window.christmasApp = new ChristmasApp();
+    
+    // Debug: Test if elements exist
+    console.log('Music button exists:', !!document.getElementById('musicToggle'));
+    console.log('Audio element exists:', !!document.getElementById('christmasMusic'));
+    
+    // Test audio file
+    const audio = document.getElementById('christmasMusic');
+    if (audio) {
+        audio.addEventListener('canplay', () => {
+            console.log('Audio file is ready to play');
+        });
+        audio.addEventListener('error', () => {
+            console.error('Audio file error:', audio.error);
+        });
+    }
 });
