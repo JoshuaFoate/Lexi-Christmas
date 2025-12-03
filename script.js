@@ -244,17 +244,62 @@ class ChristmasApp {
             {
                 title: "Your Beautiful Smile",
                 description: "The way your smile lights up my world... It's the first thing I think about when I wake up and the last thing I see before I sleep.",
-                src: "videos/day1.mp4"
+                src: "videos/Christmas_.mp4"
             },
             {
                 title: "Your Infectious Laughter",
                 description: "The sound of your laughter is my favorite melody. It fills our home with joy and makes even the hardest days better.",
-                src: "videos/day2.mp4"
+                src: "videos/Christmas_.mp4"
             },
             {
                 title: "Your Kind Heart",
                 description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
-                src: "videos/day3.mp4"
+                src: "videos/Christmas_.mp4"
+            },
+            {
+                title: "Your Kind Heart",
+                description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
+                src: "videos/Christmas_.mp4"
+            },
+            {
+                title: "Your Kind Heart",
+                description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
+                src: "videos/Christmas_.mp4"
+            },
+            {
+                title: "Your Kind Heart",
+                description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
+                src: "videos/Christmas_.mp4"
+            },
+            {
+                title: "Your Kind Heart",
+                description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
+                src: "videos/Christmas_.mp4"
+            },
+            {
+                title: "Your Kind Heart",
+                description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
+                src: "videos/Christmas_.mp4"
+            },
+            {
+                title: "Your Kind Heart",
+                description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
+                src: "videos/Christmas_.mp4"
+            },
+            {
+                title: "Your Kind Heart",
+                description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
+                src: "videos/Christmas_.mp4"
+            },
+            {
+                title: "Your Kind Heart",
+                description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
+                src: "videos/Christmas_.mp4"
+            },
+            {
+                title: "Your Kind Heart",
+                description: "How you care for everyone around you... Your compassion and empathy inspire me to be a better person every day.",
+                src: "videos/Christmas_.mp4"
             }
         ];
         
