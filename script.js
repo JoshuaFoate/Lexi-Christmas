@@ -220,57 +220,57 @@ class ChristmasApp {
             {
                 title: "Sick",
                 description: "Hopefully this video can be a little placebo and make you feel better",
-                src: "videos/Christmas_Sick.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Sick.mp4"
             },
             {
                 title: "Period",
                 description: "AHHHHH I HATE THESE",
-                src: "videos/Christmas_Period.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Period.mp4"
             },
             {
                 title: "Freaky",
                 description: "You already know what time it is baby",
-                src: "videos/Christmas_Freaky.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Freaky.mp4"
             },
             {
                 title: "Mad",
                 description: "All my fault baby I'll lock in and act better",
-                src: "videos/Christmas_Mad.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Mad.mp4"
             },
             {
                 title: "Sad",
                 description: "Time to turn that frown upside DOWN (if I can't kill me fr)",
-                src: "videos/Christmas_Sad.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Sad.mp4"
             },
             {
                 title: "Missing me",
                 description: "Instead of missing me you should be kissing me fr",
-                src: "videos/Christmas_Missing.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Missing.mp4"
             },
             {
                 title: "Hungry",
                 description: "Baby you already know I'm down to eat with you, where we going",
-                src: "videos/Christmas_Hungry.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Hungry.mp4"
             },
             {
                 title: "Obsessed",
                 description: "Baby baby baby, literally on my mind 25/8",
-                src: "videos/Christmas_Obsessed.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Obsessed.mp4"
             },
             {
                 title: "Freaky Pt. 2",
                 description: "Daylight savings must've hit cause you know what time it is again",
-                src: "videos/Christmas_Freaky_2.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Freaky_2.mp4"
             },
             {
                 title: "Stubborn",
                 description: "My stubborn stubborn girl, I promise I loveee taking care of you",
-                src: "videos/Christmas_Stubborn.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Stubborn.mp4"
             },
             {
                 title: "Overwhelmed",
                 description: "My poor baby, I hope this video can take the weight off your shoulders a little",
-                src: "videos/Christmas_Overwhelmed.mp4"
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Overwhelmed.mp4"
             }
         ];
         
