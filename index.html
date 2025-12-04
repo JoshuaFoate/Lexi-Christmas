@@ -406,16 +406,7 @@
             </div>
             <div class="modal-body">
                 <div class="video-player">
-                    <video id="mainVideo" controls onerror="videoError()">
-
-                        <script>
-                            function videoError() {
-                                const video = document.getElementById('mainVideo');
-                                console.error('Video loading error:', video.error);
-                                alert('Could not load video. Please check: 1) File exists 2) File is MP4 format 3) File is in videos/ folder');
-                            }
-                        </script>
-
+                    <video id="mainVideo" controls>
                         <source src="" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
