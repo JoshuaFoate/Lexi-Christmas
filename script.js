@@ -215,7 +215,7 @@ class ChristmasApp {
             {
                 title: "Work",
                 description: "For when you are hating work :(",
-                src: "videos_converted/Christmas_Work.mp4"
+                src: "videos/Christmas_Work.mp4"
             },
             {
                 title: "Sick",
