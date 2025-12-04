@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Video Format Checker</h1>
+    <div id="results"></div>
+    
+    <script>
+        const videos = [
+            'videos/Christmas_Work.mp4',
+            'videos/Christmas_Sick.mp4',
+            'videos/Christmas_Period.mp4',
+            'videos/Christmas_Freaky.mp4',
+            'videos/Christmas_Mad.mp4',
+            'videos/Christmas_Sad.mp4',
+            'videos/Christmas_Missing.mp4',
+            'videos/Christmas_Hungry.mp4',
+            'videos/Christmas_Obsessed.mp4',
+            'videos/Christmas_Freaky_2.mp4',
+            'videos/Christmas_Stubborn.mp4',
+            'videos/Christmas_Overwhelmed.mp4'
+        ];
+        
+        const results = document.getElementById('results');
+        
+        videos.forEach(videoPath => {
+            const video = document.createElement('video');
+            video.src = videoPath;
+            video.preload = 'metadata';
+            
+            video.addEventListener('loadedmetadata', () => {
+                console.log(`${videoPath}:`, {
+                    videoCodec: video.videoCodec,
+                    audioCodec: video.audioCodec,
+                    width: video.videoWidth,
+                    height: video.videoHeight,
+                    duration: video.duration
+                });
+                
+                results.innerHTML += `
+                    <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+                        <h3>${videoPath}</h3>
+                        <p>Size: ${video.videoWidth}x${video.videoHeight}</p>
+                        <p>Duration: ${video.duration.toFixed(2)}s</p>
+                        <p>Codec info available in console</p>
+                        <button onclick="testPlay('${videoPath}')">Test Play</button>
+                    </div>
+                `;
+            });
+            
+            video.addEventListener('error', (e) => {
+                console.error(`${videoPath}:`, e.target.error);
+                results.innerHTML += `
+                    <div style="border:1px solid red; padding:10px; margin:10px;">
+                        <h3 style="color:red">❌ ${videoPath}</h3>
+                        <p>Error: ${e.target.error?.message || 'Unknown error'}</p>
+                        <p>Code: ${e.target.error?.code || 'Unknown'}</p>
+                    </div>
+                `;
+            });
+        });
+        
+        function testPlay(src) {
+            const testVideo = document.createElement('video');
+            testVideo.controls = true;
+            testVideo.src = src;
+            testVideo.style.width = '300px';
+            
+            const container = document.createElement('div');
+            container.style.margin = '20px';
+            container.appendChild(testVideo);
+            document.body.appendChild(container);
+            
+            testVideo.play().catch(e => {
+                console.error('Play failed:', e);
+                container.innerHTML += `<p style="color:red">Play failed: ${e.message}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
