@@ -158,58 +158,36 @@ class ChristmasMusicPlayer {
         
         // Setup event listeners
         this.setupEventListeners();
-        
-        console.log('Music player initialized');
-        console.log('Audio element:', this.audio);
-        console.log('Play button:', this.playButton);
     }
     
     setupEventListeners() {
         // Play/Pause button
         if (this.playButton) {
-            console.log('Setting up play button listener');
             this.playButton.addEventListener('click', (e) => {
-                console.log('Music button clicked');
                 e.preventDefault();
                 e.stopPropagation();
                 this.togglePlay();
             });
-        } else {
-            console.error('Music button not found!');
         }
         
         // Update button state when audio starts/stops
         this.audio.addEventListener('play', () => {
-            console.log('Audio started playing');
             this.isPlaying = true;
             this.updateButtonState();
         });
         
         this.audio.addEventListener('pause', () => {
-            console.log('Audio paused');
             this.isPlaying = false;
             this.updateButtonState();
-        });
-        
-        // Handle errors
-        this.audio.addEventListener('error', (e) => {
-            console.error('Audio error:', e);
-            console.error('Audio error details:', this.audio.error);
         });
     }
     
     togglePlay() {
-        console.log('togglePlay called, isPlaying:', this.isPlaying);
-        
         if (this.isPlaying) {
             this.audio.pause();
         } else {
-            this.audio.play().then(() => {
-                console.log('Audio playback started successfully');
-            }).catch(error => {
+            this.audio.play().catch(error => {
                 console.error('Failed to play audio:', error);
-                // Show error message
-                this.showPlaybackError();
             });
         }
     }
@@ -221,22 +199,15 @@ class ChristmasMusicPlayer {
             this.playButton.innerHTML = '<i class="fas fa-volume-up"></i>';
             this.playButton.classList.add('active');
             this.playButton.title = 'Pause Music';
-            console.log('Button updated: Playing state');
         } else {
             this.playButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
             this.playButton.classList.remove('active');
             this.playButton.title = 'Play Music';
-            console.log('Button updated: Paused state');
         }
-    }
-    
-    showPlaybackError() {
-        // Simple error message
-        alert('Could not play music. Please try clicking the music button again.');
     }
 }
 
-// Main Application - SIMPLIFIED
+// Main Application
 class ChristmasApp {
     constructor() {
         this.currentSection = 'home';
@@ -307,12 +278,10 @@ class ChristmasApp {
     }
     
     init() {
-        console.log('Initializing Christmas App...');
-        
         // Initialize particle system
         this.particleSystem = new SnowParticleSystem();
         
-        // Initialize music player ONLY - remove any other music setup
+        // Initialize music player
         this.musicPlayer = new ChristmasMusicPlayer();
         
         // Setup navigation
@@ -322,8 +291,6 @@ class ChristmasApp {
         this.setupModal();
         
         this.initializeSections();
-        
-        console.log('Christmas App initialized successfully');
     }
 
     initializeSections() {
@@ -364,16 +331,14 @@ class ChristmasApp {
         });
 
         // Also setup the button clicks
-        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
-            button.addEventListener('click', (e) => {
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.btn-primary')) {
                 e.preventDefault();
-                const text = button.textContent || button.innerText;
-                if (text.includes('Videos')) {
-                    this.scrollToSection('videos');
-                } else if (text.includes('Letter')) {
-                    this.scrollToSection('letter');
-                }
-            });
+                this.scrollToSection('videos');
+            } else if (e.target.closest('.btn-secondary')) {
+                e.preventDefault();
+                this.scrollToSection('letter');
+            }
         });
     }
     
@@ -428,62 +393,140 @@ class ChristmasApp {
     }
     
     setupModal() {
-        this.modal = document.getElementById('videoModal');
-        this.modalTitle = document.getElementById('modalTitle');
-        this.modalDescription = document.getElementById('modalDescription');
-        this.videoPlayer = document.getElementById('mainVideo');
-        
-        // Setup video card clicks
-        document.querySelectorAll('.video-preview, .btn-watch').forEach(element => {
-            element.addEventListener('click', (e) => {
-                e.preventDefault();
-                const videoCard = element.closest('.video-card');
-                if (videoCard) {
-                    const day = parseInt(videoCard.getAttribute('data-day'));
-                    this.openVideoModal(day);
+    this.modal = document.getElementById('videoModal');
+    this.modalTitle = document.getElementById('modalTitle');
+    this.modalDescription = document.getElementById('modalDescription');
+    this.videoPlayer = document.getElementById('mainVideo');
+    
+    // Debug: Check what attributes exist
+    console.log('Setting up video modal...');
+    const allCards = document.querySelectorAll('.video-card');
+    console.log(`Found ${allCards.length} video cards`);
+    
+    allCards.forEach((card, index) => {
+        const videoIndex = card.getAttribute('data-video-index');
+        const dayAttr = card.getAttribute('data-day');
+        console.log(`Card ${index}: data-video-index="${videoIndex}", data-day="${dayAttr}"`);
+    });
+    
+    // Setup video card clicks - SIMPLIFIED
+    document.addEventListener('click', (e) => {
+        // Check if click is on video preview or watch button
+        const videoElement = e.target.closest('.video-preview, .btn-watch');
+        if (videoElement) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Find the parent video card
+            const videoCard = videoElement.closest('.video-card');
+            if (videoCard) {
+                console.log('Video card clicked:', videoCard);
+                
+                // Get ALL attributes to debug
+                const attrs = videoCard.attributes;
+                console.log('All attributes on clicked card:');
+                for (let attr of attrs) {
+                    console.log(`  ${attr.name} = "${attr.value}"`);
                 }
-            });
+                
+                // Try to get video index - check multiple possible attributes
+                let videoIndex = null;
+                
+                // Check for data-video-index
+                if (videoCard.hasAttribute('data-video-index')) {
+                    videoIndex = videoCard.getAttribute('data-video-index');
+                    console.log('Found data-video-index:', videoIndex);
+                }
+                // Check for data-day
+                else if (videoCard.hasAttribute('data-day')) {
+                    const day = videoCard.getAttribute('data-day');
+                    console.log('Found data-day:', day);
+                    videoIndex = parseInt(day) - 1; // Convert 1-12 to 0-11
+                }
+                // Fallback: find card position
+                else {
+                    console.log('No data attribute found, using card position');
+                    const allCards = document.querySelectorAll('.video-card');
+                    for (let i = 0; i < allCards.length; i++) {
+                        if (allCards[i] === videoCard) {
+                            videoIndex = i;
+                            console.log('Card position found:', i);
+                            break;
+                        }
+                    }
+                }
+                
+                console.log('Final video index to open:', videoIndex);
+                
+                // Parse as integer
+                videoIndex = parseInt(videoIndex);
+                
+                // Check if valid
+                if (isNaN(videoIndex) || videoIndex < 0 || videoIndex >= this.videos.length) {
+                    console.error('Invalid video index:', videoIndex);
+                    alert('Error: Could not find video. Please check the console for details.');
+                    return;
+                }
+                
+                // Open the correct video
+                this.openVideoModal(videoIndex);
+                }
+            }
         });
     }
     
-    openVideoModal(day) {
-        const videoIndex = day - 1;
-        if (videoIndex < 0 || videoIndex >= this.videos.length) return;
+    openVideoModal(videoIndex) {
+        console.log('Opening video at index:', videoIndex);
         
+        // Check if index is valid
+        if (videoIndex < 0 || videoIndex >= this.videos.length) {
+            console.error('Invalid video index:', videoIndex);
+            return;
+        }
+        
+        // Get the correct video from your array
         const video = this.videos[videoIndex];
+        console.log('Playing video:', video);
+        
+        // Update modal content
         this.modalTitle.textContent = video.title;
         this.modalDescription.textContent = video.description;
         this.videoPlayer.src = video.src;
         
+        // Show modal
         this.modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         
-        // Play video
+        // Try to play video after a short delay
         setTimeout(() => {
-            this.videoPlayer.play().catch(() => {
-                // Autoplay prevented
+            this.videoPlayer.play().catch(error => {
+                console.log('Video autoplay prevented, user can click play:', error);
             });
         }, 300);
     }
-    
+
     closeModal() {
         this.modal.classList.remove('active');
         document.body.style.overflow = '';
-        this.videoPlayer.pause();
-        this.videoPlayer.currentTime = 0;
+        
+        if (this.videoPlayer) {
+            this.videoPlayer.pause();
+            this.videoPlayer.currentTime = 0;
+            this.videoPlayer.src = ''; // Clear src to free memory
+        }
     }
 }
 
-// Global helper functions - Keep these simple
+// Global helper functions
 function scrollToSection(sectionId) {
     if (window.christmasApp) {
         window.christmasApp.scrollToSection(sectionId);
     }
 }
 
-function openVideoModal(day) {
+function openVideoModal(videoIndex) {
     if (window.christmasApp) {
-        window.christmasApp.openVideoModal(day);
+        window.christmasApp.openVideoModal(videoIndex);
     }
 }
 
@@ -505,7 +548,7 @@ document.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         const modal = document.getElementById('videoModal');
-        if (modal.classList.contains('active')) {
+        if (modal && modal.classList.contains('active')) {
             closeModal();
         }
     }
@@ -513,21 +556,5 @@ document.addEventListener('keydown', (e) => {
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing app...');
     window.christmasApp = new ChristmasApp();
-    
-    // Debug: Test if elements exist
-    console.log('Music button exists:', !!document.getElementById('musicToggle'));
-    console.log('Audio element exists:', !!document.getElementById('christmasMusic'));
-    
-    // Test audio file
-    const audio = document.getElementById('christmasMusic');
-    if (audio) {
-        audio.addEventListener('canplay', () => {
-            console.log('Audio file is ready to play');
-        });
-        audio.addEventListener('error', () => {
-            console.error('Audio file error:', audio.error);
-        });
-    }
 });
