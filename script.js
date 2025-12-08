@@ -271,6 +271,11 @@ class ChristmasApp {
                 title: "Overwhelmed",
                 description: "My poor baby, I hope this video can take the weight off your shoulders a little",
                 src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Overwhelmed.mp4"
+            },
+            {
+                title: "Love",
+                description: "I'm literally going to marry you baby, the love of all of my lives",
+                src: "https://github.com/JoshuaFoate/Lexi-Christmas/raw/main/videos/Christmas_Love.mp4"
             }
         ];
         
